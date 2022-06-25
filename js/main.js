@@ -3,31 +3,39 @@
 "use strict";
 
 // Tooltip inintialization
-const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+const tooltipTriggerList = document.querySelectorAll(
+  '[data-bs-toggle="tooltip"]'
+);
+const tooltipList = [...tooltipTriggerList].map(
+  (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+);
+
+// Global Variables goes here
+let allFetchedMovies = [];
 
 // feth data from API Url
 const fetchData = async (url) => {
-    const response = await fetch(url);
-    const data = await response.json();
-    return data;
-}
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+};
 
-
-// render movies to html 
+// render movies to html
 async function renderMovies(p) {
+  let data = await fetchData(
+    `https://api.themoviedb.org/3/movie/popular?api_key=eba8b9a7199efdcb0ca1f96879b83c44&page=${p}`
+  );
+  //console.log(data.results);
+  let movies = data.results;
+  let moviesDataContainer = document.querySelector("#movies-data");
 
-    let data = await fetchData(`https://api.themoviedb.org/3/movie/popular?api_key=eba8b9a7199efdcb0ca1f96879b83c44&page=${p}`);
-    console.log(data.results);
-    let movies = data.results;
-    let moviesDataContainer = document.querySelector('#movies-data');
+  allFetchedMovies.push(...data.results);
+  console.log("allfetched", allFetchedMovies);
+  movies.forEach((movie) => {
+    let moviesDiv = document.createElement("div");
+    moviesDiv.classList.add("col-md-6", "col-lg-4", "my-3");
 
-
-    movies.forEach(movie => {
-        let moviesDiv = document.createElement('div');
-        moviesDiv.classList.add('col-md-6', 'col-lg-4', 'my-3');
-
-        moviesDiv.innerHTML = `
+    moviesDiv.innerHTML = `
             <div class="card shadow-lg border-0 rounded position-relative" style="overflow: hidden;">  
                 <img class="img-fluid rounded" src="https://image.tmdb.org/t/p/w500${movie.poster_path}" >
                     <div class="layer d-flex align-items-center ">
@@ -42,49 +50,73 @@ async function renderMovies(p) {
                     </div>
             </div>
         `;
-        moviesDataContainer.appendChild(moviesDiv);
-        
-    }
-    );
-};
+    moviesDataContainer.appendChild(moviesDiv);
+  });
+}
 
 // render on first load
 renderMovies(1);
 
-
 // load more movies on scroll (infinity scroll)
 let counterScroll = 2;
-document.addEventListener('scroll', function(e) {
+document.addEventListener("scroll", function (e) {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
 
-     const {
-            scrollTop,
-            scrollHeight,
-            clientHeight
-        } = document.documentElement;
-
-
-    if (scrollTop + clientHeight >= scrollHeight - 5 ) {
-        // console.log('scrolled to bottom');
-        counterScroll++;
-        renderMovies(counterScroll);
-    }
-    
-  });
-
-
-  // dark mode toggle 
-const darkModeToggle = document.querySelector('.mode-toggle');
-darkModeToggle.addEventListener('click', function(e) {
-
-    let element = document.body;
-    let layers = document.querySelectorAll('.layer')
-
-    element.classList.toggle("dark-mode");
-    for (const layer of layers) {
-        layer.classList.toggle("toggle-layer");
-      }
-    
+  if (scrollTop + clientHeight >= scrollHeight - 5) {
+    // console.log('scrolled to bottom');
+    counterScroll++;
+    renderMovies(counterScroll);
+  }
 });
 
-// search in the page 
+// dark mode toggle
+const darkModeToggle = document.querySelector(".mode-toggle");
+darkModeToggle.addEventListener("click", function (e) {
+  let element = document.body;
+  let layers = document.querySelectorAll(".layer");
 
+  element.classList.toggle("dark-mode");
+  for (const layer of layers) {
+    layer.classList.toggle("toggle-layer");
+  }
+});
+
+// search in the page
+
+function renderSearchInCurrentMovies(searchWords) {
+  let moviesDataContainer = document.querySelector("#movies-data");
+
+  console.log("allfetched", allFetchedMovies);
+
+  // empty the content
+  moviesDataContainer.innerHTML = ``;
+
+  allFetchedMovies.forEach((movie) => {
+    if (`${movie.original_title}` == searchWords) {
+        console.log(searchWords)
+        
+        let moviesDiv = document.createElement("div");
+        moviesDiv.classList.add("col-md-6", "col-lg-4", "my-3");
+
+        moviesDiv.innerHTML = `
+                <div class="card shadow-lg border-0 rounded position-relative" style="overflow: hidden;">  
+                    <img class="img-fluid rounded" src="https://image.tmdb.org/t/p/w500${movie.poster_path}" >
+                        <div class="layer d-flex align-items-center ">
+                            <div class="info p-0">
+                        
+                                <h2>${movie.original_title}</h2>
+                                <p>${movie.overview}</p>
+                                <p>${movie.vote_average}</p>
+                                <p>${movie.release_date}</p>
+                                
+                            </div>
+                        </div>
+                </div>
+            `;
+      moviesDataContainer.appendChild(moviesDiv);
+    }
+  });
+}
+
+
+renderSearchInCurrentMovies(" dopmvpdmpmdpmfv")
