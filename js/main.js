@@ -47,9 +47,9 @@ async function renderMovies(p) {
     }
     );
 };
+
 // render on first load
 renderMovies(1);
-
 
 
 // load more movies on scroll (infinity scroll)
@@ -85,3 +85,6 @@ darkModeToggle.addEventListener('click', function(e) {
       }
     
 });
+
+// search in the page 
+

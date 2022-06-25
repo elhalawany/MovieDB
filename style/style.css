@@ -5,10 +5,6 @@ body{
     color: black;
 }
 
-.dark-mode {
-    background-color: black;
-    color: white;
-  }
 
 .nav-header{
     width: 60px;
@@ -40,7 +36,24 @@ body{
 	top: 0;
 	transition: all 1s;
 }
+
+.form-control {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,.7);
+    color: #fff;
+    font-weight: 800;
+}
+
+/* Dark Mode  */
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+
 .toggle-layer{
     background-color: rgba(0, 0, 0,.5); 
     color: #fff;
 }
+
