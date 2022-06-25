@@ -1,8 +1,14 @@
 
 body{
     margin-left: 60px;
-
+    background-color: white;
+    color: black;
 }
+
+.dark-mode {
+    background-color: black;
+    color: white;
+  }
 
 .nav-header{
     width: 60px;
