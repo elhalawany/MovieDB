@@ -1,4 +1,6 @@
 // *************************** بسم الله الرحمن الرحيم ************************** \\
+// strict mode
+"use strict";
 
 // Tooltip inintialization
 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -6,9 +8,9 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
 
 // feth data from API Url
 const fetchData = async (url) => {
-    const response = await fetch(url)
-    const data = await response.json()
-    return data
+    const response = await fetch(url);
+    const data = await response.json();
+    return data;
 }
 
 
@@ -16,7 +18,7 @@ const fetchData = async (url) => {
 async function renderMovies(p) {
 
     let data = await fetchData(`https://api.themoviedb.org/3/movie/popular?api_key=eba8b9a7199efdcb0ca1f96879b83c44&page=${p}`);
-    //console.log(data.results);
+    console.log(data.results);
     let movies = data.results;
     let moviesDataContainer = document.querySelector('#movies-data');
 
@@ -26,8 +28,18 @@ async function renderMovies(p) {
         moviesDiv.classList.add('col-md-6', 'col-lg-4', 'my-3');
 
         moviesDiv.innerHTML = `
-            <div class="card shadow-lg rounded position-relative">  
+            <div class="card shadow-lg border-0 rounded position-relative" style="overflow: hidden;">  
                 <img class="img-fluid rounded" src="https://image.tmdb.org/t/p/w500${movie.poster_path}" >
+                    <div class="layer d-flex align-items-center ">
+                        <div class="info p-0">
+                    
+                            <h2>${movie.original_title}</h2>
+                            <p>${movie.overview}</p>
+                            <p>${movie.vote_average}</p>
+                            <p>${movie.release_date}</p>
+                            
+                        </div>
+                    </div>
             </div>
         `;
         moviesDataContainer.appendChild(moviesDiv);
@@ -61,8 +73,15 @@ document.addEventListener('scroll', function(e) {
 
 
   // dark mode toggle 
-    const darkModeToggle = document.querySelector('#dark-mode-toggle');
-    function myFunction() {
-    var element = document.body;
+const darkModeToggle = document.querySelector('.mode-toggle');
+darkModeToggle.addEventListener('click', function(e) {
+
+    let element = document.body;
+    let layers = document.querySelectorAll('.layer')
+
     element.classList.toggle("dark-mode");
-  }
+    for (const layer of layers) {
+        layer.classList.toggle("toggle-layer");
+      }
+    
+});
