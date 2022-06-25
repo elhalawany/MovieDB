@@ -5,20 +5,75 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="style/style.css">
     <title>Movie DB</title>
 </head>
 <body>
     
-<section id="side-navbar"></section>
+<section id="side-navbar ">
 
-<section >
-    
+    <div class="nav-header position-fixed " >
+        <div class="position-absolute  text-center mt-3"><img src="images/logo.png"></div>
 
+        <div class="position-absolute top-50 start-50 translate-middle"  data-bs-toggle="tooltip" data-bs-placement="right" title="Options">
+            <i class="fa-solid fa-bars fa-2x"></i>
+        </div>
 
+        <div class="position-absolute bottom-0 start-50 translate-middle ">
+            <div data-bs-toggle="tooltip" data-bs-placement="right" title="Dark/Light Mode"><i class="fa-solid fa-moon pb-2"></i></div>
+            <di data-bs-toggle="tooltip" data-bs-placement="right" title="Share"><i class="fa-solid fa-share-nodes pb-2"></i></di> 
+        </div>
+        
+    </div>
 
+    <div id="canvas">  
+      <div class="offcanvas offcanvas-start" data-bs-backdrop="static" tabindex="-1" id="staticBackdrop" aria-labelledby="staticBackdropLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="staticBackdropLabel">Offcanvas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div>
+            I will not close if you click outside of me.
+          </div>
+        </div>
+      </div>
+    </div>
 </section>
 
+<section class="container text-center">
+
+    <div class="row" id="movies-data">
+
+        <!-- <div class="col-md-6 col-lg-4 my-3 ">
+            <div class="card shadow-lg rounded position-relative">  
+                <img class="img-fluid rounded" src="https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg" >
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 my-3">
+            <div class="card shadow-lg rounded position-relative">  
+                <img class="img-fluid rounded" src="https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg" >
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 my-3 ">
+            <div class="card shadow-lg rounded position-relative">  
+                <img class="img-fluid rounded" src="https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg" >
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4 my-3 ">
+            <div class="card shadow-lg rounded position-relative">  
+                <img class="img-fluid rounded" src="https://image.tmdb.org/t/p/w500/9Gtg2DzBhmYamXBS1hKAhiwbBKS.jpg" >
+            </div>
+        </div> -->
+       
+
+    </div>
+    
+</section>
 
 
 <script src="js/bootstrap.bundle.min.js"></script>
