@@ -82,18 +82,16 @@ darkModeToggle.addEventListener("click", function (e) {
 });
 
 // search in the page
+let loadedMovies = document.querySelector('#loadedMovies');
 
 function renderSearchInCurrentMovies(searchWords) {
   let moviesDataContainer = document.querySelector("#movies-data");
-
-  console.log("allfetched", allFetchedMovies);
 
   // empty the content
   moviesDataContainer.innerHTML = ``;
 
   allFetchedMovies.forEach((movie) => {
-    if (`${movie.original_title}` == searchWords) {
-        console.log(searchWords)
+    if (`${movie.original_title}`.toLowerCase().includes(searchWords)) {
         
         let moviesDiv = document.createElement("div");
         moviesDiv.classList.add("col-md-6", "col-lg-4", "my-3");
@@ -117,6 +115,5 @@ function renderSearchInCurrentMovies(searchWords) {
     }
   });
 }
-
-
-renderSearchInCurrentMovies(" dopmvpdmpmdpmfv")
+// input listerner
+loadedMovies.addEventListener('keyup', (e) => renderSearchInCurrentMovies(loadedMovies.value))
