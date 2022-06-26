@@ -30,7 +30,7 @@ async function renderMovies(p) {
   let moviesDataContainer = document.querySelector("#movies-data");
 
   allFetchedMovies.push(...data.results);
-  console.log("allfetched", allFetchedMovies);
+  //console.log("allfetched", allFetchedMovies);
   movies.forEach((movie) => {
     let moviesDiv = document.createElement("div");
     moviesDiv.classList.add("col-md-6", "col-lg-4", "my-3");
@@ -71,6 +71,7 @@ document.addEventListener("scroll", function (e) {
 
 // dark mode toggle
 const darkModeToggle = document.querySelector(".mode-toggle");
+
 darkModeToggle.addEventListener("click", function (e) {
   let element = document.body;
   let layers = document.querySelectorAll(".layer");
@@ -117,3 +118,45 @@ function renderSearchInCurrentMovies(searchWords) {
 }
 // input listerner
 loadedMovies.addEventListener('keyup', (e) => renderSearchInCurrentMovies(loadedMovies.value))
+
+
+
+// search in all movies DB
+async function renderAllMoviesSearch(keywords) {
+    let data = await fetchData(
+      `https://api.themoviedb.org/3/search/movie?api_key=eba8b9a7199efdcb0ca1f96879b83c44&language=en-US&include_adult=false&query=${keywords}`
+    );
+
+    console.log(data.results);
+    let movies = data.results;
+    let moviesDataContainer = document.querySelector("#movies-data");
+    moviesDataContainer.innerHTML = ``;
+    allFetchedMovies.push(...data.results);
+    
+    movies.forEach((movie) => {
+      let moviesDiv = document.createElement("div");
+      moviesDiv.classList.add("col-md-6", "col-lg-4", "my-3");
+  
+      moviesDiv.innerHTML = `
+              <div class="card shadow-lg border-0 rounded position-relative" style="overflow: hidden;">  
+                  <img class="img-fluid rounded" src="https://image.tmdb.org/t/p/w500${movie.poster_path}" >
+                      <div class="layer d-flex align-items-center ">
+                          <div class="info p-0">
+                      
+                              <h2>${movie.original_title}</h2>
+                              <p>${movie.overview}</p>
+                              <p>${movie.vote_average}</p>
+                              <p>${movie.release_date}</p>
+                              
+                          </div>
+                      </div>
+              </div>
+          `;
+      moviesDataContainer.appendChild(moviesDiv);
+    });
+  }
+
+
+
+let allMovies = document.querySelector('#allMovies');
+allMovies.addEventListener('keyup', (e) => renderAllMoviesSearch(allMovies.value))
